@@ -8,17 +8,20 @@ import NavBar from './NavBar';
 import Movies from './Movies';
 
 export default function App(){
+
+    const [section, setSection] = React.useState('Selecione o filme');
+
     return(
 
         <BrowserRouter>
         <GlobalStyle/>
         <NavBar />
-        <SelectionSections />
+        <SelectionSections section={section}/>
             <Container>
-                <Movies />
+                <Movies setSection={setSection}/>
+            </Container>
                 <Routes>
                 </Routes>
-            </Container>
         </BrowserRouter>
 
     );
@@ -29,4 +32,8 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
 
+    Movies{
+        display: flex;
+        flex-direction: row;
+    }
 `;

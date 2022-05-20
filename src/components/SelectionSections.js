@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function SelectionSections(){
+export default function SelectionSections(props){
 
-    const [section, setSection] = React.useState('Selecione o filme');
-
+    console.log(props)
     return(
         <SelectSection>
-            <p>{section}</p>
+            <p>{props.section}</p>
         </SelectSection>
     );
 }
