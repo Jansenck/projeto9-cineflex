@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 export default function SelectionSections(props){
 
-    console.log(props)
     return(
         <SelectSection>
             <p>{props.section}</p>

@@ -1,9 +1,11 @@
 import {React, useState, useEffect} from 'react';
+import {Link}  from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
+import MovieSessions from './MovieSessions';
 
-export default function Movies(){
+export default function Movies(setSection, setSession){
     
     const [movies, setMovies] = useState([]);
 
@@ -15,21 +17,21 @@ export default function Movies(){
 		});
 	}, []);
 
-    const movie = movies.map((movie, index) =>(
-            <Movie key={movie.id}>
-                    <img src={movie.posterURL} alt={'movie'}/>
-            </Movie>
-    ));
-
     if(movies){
         return(
-            <Section>
-                {movie}
+            <Section >
+                {movies.map((movie) =>(
+                    <Link to={`sessao/${movie.id}`}>
+                        <Movie key={movie.id}>
+                            <img src={movie.posterURL} alt={'movie'}/>
+                        </Movie>
+                    </Link>
+                ))}
             </Section>
         );
     } else {
         console.log(movies);
-        return(<h1>Esperando API responder</h1>);
+        return(<h1>Carregando...</h1>);
         
     }
 }
