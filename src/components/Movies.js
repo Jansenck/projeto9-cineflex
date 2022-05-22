@@ -3,16 +3,14 @@ import {Link}  from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
-import MovieSessions from './MovieSessions';
-
-export default function Movies(setSection, setSession){
+export default function Movies(){
     
     const [movies, setMovies] = useState([]);
 
     useEffect(() => {
-        const request = axios.get('https://mock-api.driven.com.br/api/v5/cineflex/movies');
+        const promisse = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies`);
 
-        request.then((response) => {
+        promisse.then((response) => {
 			setMovies(response.data);
 		});
 	}, []);
@@ -20,10 +18,10 @@ export default function Movies(setSection, setSession){
     if(movies){
         return(
             <Section >
-                {movies.map((movie) =>(
-                    <Link to={`sessao/${movie.id}`}>
-                        <Movie key={movie.id}>
-                            <img src={movie.posterURL} alt={'movie'}/>
+                {movies.map((movie, index) =>(
+                    <Link to={`sessoes/${movie.id}`}>
+                        <Movie key={index}>
+                            <img src={movie.posterURL} alt='movie'/>
                         </Movie>
                     </Link>
                 ))}
@@ -31,8 +29,7 @@ export default function Movies(setSection, setSession){
         );
     } else {
         console.log(movies);
-        return(<h1>Carregando...</h1>);
-        
+        return(<h1>Carregando...</h1>);  
     }
 }
 

@@ -2,11 +2,9 @@ import styled from 'styled-components';
 
 export default function NavBar(){
     return(
-
         <TopBar>
             <p>CINEFLEX</p>
         </TopBar>
-
     );
 }
 

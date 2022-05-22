@@ -13,7 +13,6 @@ import SessionsSeats from './SessionsSeats';
 export default function App(){
 
     const [section, setSection] = React.useState('Selecione o filme');
-    const [session, setSession] = React.useState([]);
 
     return(
 
@@ -23,9 +22,9 @@ export default function App(){
         <SelectionSections section={section}/>
             <Container>
             <Routes>
-                <Route path="/" element={<Movies setSection={setSection} setSession={setSession}/>} />
-                <Route path="/sessoes/:idMovie" element={<MovieSessions setSection={setSection}/>} />
-                <Route path="/assentos/:idSession" element={<SessionsSeats setSection={setSection}/>} />
+                <Route path="/" element={<Movies/>} />
+                <Route path="/sessoes/:idMovie" element={<MovieSessions/>} />
+                <Route path="/assentos/:idSession" element={<SessionsSeats/>} />
                 <Route path="/sucesso" element={<MovieTicket/>} />
             </Routes>
             </Container>
@@ -37,5 +36,5 @@ export default function App(){
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    
 `;
