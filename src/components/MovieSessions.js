@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -34,8 +34,11 @@ export default function MovieSessions(movie){
                         <p>{horarios.weekday} - {horarios.date}</p> 
                         
                         <Times>
-                            {horarios.showtimes.map((horario, index)=> 
-                                <Time key={index}>{horario.name}</Time>)}
+                            {horarios.showtimes.map((horario, index)=>
+                                <Link to={`sessoes/${movie.id}`}>
+                                    <Time key={index}>{horario.name}</Time>
+                                </Link>
+                            )}
                         </Times>
                     
                     </Sessions>
@@ -84,4 +87,7 @@ const Times = styled.div`
     display: flex;
     flex-direction:row;
     justify-content: space-between;
+
 `;
+
+//REMOVER O UNDERLINE DOS HORARIOS
