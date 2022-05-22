@@ -5,8 +5,9 @@ import axios from 'axios';
 
 import Footer from './Footer';
 
+export let dataTicket = {};
 
-export default function MovieSessions(setSection, movie){
+export default function MovieSessions(movie){
 
     const {idMovie} = useParams();
     const [session, setSession] = useState([]);
@@ -16,8 +17,14 @@ export default function MovieSessions(setSection, movie){
         
         promisse.then( (response) => {
             setSession(response.data.days);
+            dataTicket.days = response.data.days;
+            dataTicket.image = response.data.posterURL;
+            dataTicket.title = response.data.title;
+
         }).catch('Carregando...')
     }, [idMovie]);
+
+    console.log(dataTicket);
 
     return(
         <>
@@ -34,7 +41,7 @@ export default function MovieSessions(setSection, movie){
                     </Sessions>
             )}
             <Footer>
-                <div>{movie}</div>
+                {dataTicket.title}
             </Footer>
         </>
     )
@@ -57,11 +64,12 @@ const Time = styled.div`
 
 const Sessions = styled.div`
     height: 80px;
-    width: 250px;
+    width: 300px;
 
     font-size: 20px;
 
     margin-bottom: 35px;
+    
     padding: 0px 25px;
     box-sizing: border-box;
 

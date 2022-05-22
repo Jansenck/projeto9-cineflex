@@ -1,11 +1,13 @@
 import {React, useState, useEffect} from 'react';
-import {Link}  from 'react-router-dom';
+import {Link, useNavigate}  from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
 export default function Movies(){
     
     const [movies, setMovies] = useState([]);
+
+    //TENTAR USAR O USENAVIGATE SE NAO DER CERTO
 
     useEffect(() => {
         const promisse = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies`);
@@ -16,6 +18,7 @@ export default function Movies(){
 	}, []);
 
     if(movies){
+
         return(
             <Section >
                 {movies.map((movie, index) =>(
@@ -28,13 +31,15 @@ export default function Movies(){
             </Section>
         );
     } else {
-        console.log(movies);
+
         return(<h1>Carregando...</h1>);  
     }
 }
 
 const Section = styled.section`
     width: 90vw;
+    
+    margin-bottom: 10vh;
 
     display: flex;
     justify-content: space-between;

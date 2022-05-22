@@ -11,7 +11,7 @@ export default function NavBar(){
 const TopBar = styled.div`
     height: 10vh;
     width: 100vw;
-
+    
     background-color:#C3CFD9;
     color: #E8833A;
     font-size: 36px;
@@ -19,4 +19,7 @@ const TopBar = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    position: fixed;
+    z-index: 2;
 `;

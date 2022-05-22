@@ -1,9 +1,15 @@
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function Footer(movie){
+import { dataTicket } from './MovieSessions';
+
+export default function Footer(movies){
+
+    const {idMovie} = useParams();
+  
     return(
         <InfosTicket>
-            
+            {dataTicket.title}
         </InfosTicket>
     );
 }
@@ -14,4 +20,6 @@ const InfosTicket = styled.footer`
 
     position: fixed;
     bottom: 0;
+    background-color: purple;
+
 `;
