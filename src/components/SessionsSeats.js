@@ -5,13 +5,17 @@ import styled from 'styled-components';
 
 import Footer from "./Footer";
 
-const seatColor = "#C3CFD9";
+import { dataTicket } from "./MovieSessions";
 
-export default function SessionsSeats(props){
+
+export default function SessionsSeats(){
 
     const {idSession} = useParams();
+    const [movie, setMovie] = useState([]);
+    const [day, setDay] = useState([]);
+    const [time, setTime] = useState([]);
     const [seats, setSeats] = useState([]);
-
+    const [seatColor, setSeatColor] = useState('');
 
 
     useEffect(() => {
@@ -20,20 +24,52 @@ export default function SessionsSeats(props){
 
         promisse.then((response) => {
 
+            setMovie(response.data.movie);
+            setDay(response.data.day);
+            setTime(response.data.name);
             setSeats(response.data.seats);
 
         }).catch('Carregando...')
         
     }, [idSession]);
 
+    function infosSelected(props){
+        dataTicket.movie = movie.title;
+        dataTicket.day = day.weekday;
+        dataTicket.time = time;
+        dataTicket.seatId = props;
+        dataTicket.seatAvaliable = seats[props -1].isAvailable;
+
+        console.log(dataTicket)
+    }
+
+    function mudaCor(){
+
+        setSeatColor('#8DD7CF');
+        if(seatColor !== ''){
+            console.log(seatColor)
+            return(
+    
+               <Seat  seatColor={seatColor}/>
+            );
+        } else{
+            return("carregando...")
+        }
+    }
+
     function renderSeats(){
         return(
             seats.map((seat, index) => (
 
-                <Seat key={index} isAvailable={seat.isAvailable}>
-                    <p>{seat.name}</p>
-                </Seat>
+                seat.isAvailable ? 
+                    <Seat key={index} id={seat.id} name={seat.name} seatColor={"#C3CFD9"} onClick={() => {mudaCor()}}>
+                        <p>{seat.name}</p>
+                    </Seat>
+                    :<Seat key={index} id={seat.id} seatColor={"#FBE192"} onClick={() => infosSelected(seat.name)}>
+                        <p>{seat.name}</p>
+                    </Seat>
             ))
+
         );
     }
 
@@ -42,7 +78,28 @@ export default function SessionsSeats(props){
             <Seats>
                 {renderSeats()}
             </Seats>
-            <Footer date={seats.idSession} time={seats}/>
+
+            <Forms>
+                <p>Nome do comprador:</p>
+                <input type="text" placeholder="Digite o seu nome"/>
+                <p>CPF do comprador:</p>
+                <input type="text" placeholder="Digite o seu CPF"/>
+            </Forms>
+
+            <Description>
+                <div>
+                    <Seat style={{background:'#8DD7CF'}}/><br/><p>Selecionado</p>
+                </div>
+                <div>
+                    <Seat style={{background:'#C3CFD9'}}/><br/><p>Disponível</p>
+                </div>
+                <div>
+                    <Seat style={{background:'#FBE192'}}/><br/><p>Indisponível</p>
+                </div>
+            </Description>
+            <Footer image={movie.posterURL} >
+                <h1>{movie.title}<br /> {day.weekday} - {time}</h1> 
+            </Footer>
         </>
     );
     
@@ -51,6 +108,8 @@ export default function SessionsSeats(props){
 const Seats = styled.section`
     height: 40vh;
     width: 85vw;
+
+    margin-bottom: 30px;
 
     display: flex;
     flex-direction: row;
@@ -67,9 +126,48 @@ const Seat = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    background-color: ${props => props.isAvailable? '#C3CFD9' : '#FBE192'};
+    background-color: ${props => props.seatColor};
+
     p{
         font-size:10px;
     }
+`;
+
+const Description = styled.div`
+    width: 100vw;
+
+    margin: 30px;
+
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    justify-content: space-around;
+
+        div{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+`;
+
+const Forms = styled.form`
+    height: 30vh;
+    width: 90vw;
+
+    font-size: 18px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+        input{
+            height: 8vh;
+            font-size: 18px;
+            font-style: italic;
+            color: #D4D4D4;
+            margin: 15px 0px;
+            border: 1px solid #D5D5D5;
+            border-radius: 3px;
+        }
 `;

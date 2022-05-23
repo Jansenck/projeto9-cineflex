@@ -11,8 +11,7 @@ export default function Footer(props){
             <ContainerImg >
                 <img src={props.image} alt=""/>
             </ContainerImg>
-            {props.title}
-            {props.date}
+            {props.children}
         </InfosTicket>
     );
 
@@ -23,7 +22,8 @@ const InfosTicket = styled.footer`
     width: 100vw;
     height: 117px;
 
-    font-size: 26px;
+    font-size: 24px;
+    color:#293845;
 
     background: #DFE6ED;
     border: 1px solid #9EADBA;

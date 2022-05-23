@@ -1,17 +1,20 @@
 import {useEffect, useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useParams, useNavigate} from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
 import Footer from './Footer';
 
-export let dataTicket = {};
+export let dataTicket = {
+
+};
 
 export default function MovieSessions(movie){
 
     const {idMovie} = useParams();
     const [session, setSession] = useState([]);
     const [sessionDays, setSessionDays] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const promisse = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idMovie}/showtimes`);
@@ -22,8 +25,12 @@ export default function MovieSessions(movie){
            
 
         }).catch('Carregando...')
-        
+
     }, [idMovie]);
+
+    function setData(props){
+        dataTicket.title = props
+    }
 
     function renderSession(){
         return(
@@ -48,7 +55,9 @@ export default function MovieSessions(movie){
     return(
         <>
             {renderSession()}
-            <Footer image={session.posterURL} title={session.title}/>
+            <Footer image={session.posterURL} >
+                {session.title}
+            </Footer>
         </>
     )
 
