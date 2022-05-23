@@ -1,5 +1,5 @@
 import {React, useState, useEffect} from 'react';
-import {Link, useNavigate}  from 'react-router-dom';
+import {Link}  from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 
@@ -17,18 +17,25 @@ export default function Movies(){
 		});
 	}, []);
 
+    function renderMovies(){
+        return(
+            movies.map((movie, index) => 
+            <Link to={`sessoes/${movie.id}`}>
+                <Movie key={index}>
+                    <img src={movie.posterURL} alt='movie'/>
+                </Movie>
+            </Link>
+        ));
+    }
+
     if(movies){
 
         return(
-            <Section >
-                {movies.map((movie, index) =>(
-                    <Link to={`sessoes/${movie.id}`}>
-                        <Movie key={index}>
-                            <img src={movie.posterURL} alt='movie'/>
-                        </Movie>
-                    </Link>
-                ))}
-            </Section>
+            <> 
+                <Section >
+                    {renderMovies()}
+                </Section>
+            </>
         );
     } else {
 

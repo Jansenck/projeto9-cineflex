@@ -11,43 +11,47 @@ export default function MovieSessions(movie){
 
     const {idMovie} = useParams();
     const [session, setSession] = useState([]);
+    const [sessionDays, setSessionDays] = useState([]);
 
     useEffect(() => {
         const promisse = axios.get(`https://mock-api.driven.com.br/api/v5/cineflex/movies/${idMovie}/showtimes`);
         
         promisse.then( (response) => {
-            setSession(response.data.days);
-            dataTicket.days = response.data.days;
-            dataTicket.image = response.data.posterURL;
-            dataTicket.title = response.data.title;
+            setSession(response.data);
+            setSessionDays(response.data.days);
+           
 
         }).catch('Carregando...')
+        
     }, [idMovie]);
 
-    console.log(dataTicket);
+    function renderSession(){
+        return(
+            sessionDays.map(horarios => (
+                <Sessions>
+    
+                    <p>{horarios.weekday} - {horarios.date}</p> 
+                    
+                    <Times>
+                        {horarios.showtimes.map((days, index) => (
+                            <Link to={`/assentos/${days.id}`} style={{textDecoration:'none'}}>
+                                <Time key={index}>{days.name}</Time>
+                            </Link>
+                        ))}
+                    </Times>
+                
+                </Sessions>
+            ))
+        );
+    }
 
     return(
         <>
-            {session.map((horarios, index) => 
-                    <Sessions key={index}>
-
-                        <p>{horarios.weekday} - {horarios.date}</p> 
-                        
-                        <Times>
-                            {horarios.showtimes.map((horario, index)=>
-                                <Link to={`sessoes/${movie.id}`}>
-                                    <Time key={index}>{horario.name}</Time>
-                                </Link>
-                            )}
-                        </Times>
-                    
-                    </Sessions>
-            )}
-            <Footer>
-                {dataTicket.title}
-            </Footer>
+            {renderSession()}
+            <Footer image={session.posterURL} title={session.title}/>
         </>
     )
+
 }
 
 const Time = styled.div`
@@ -91,3 +95,4 @@ const Times = styled.div`
 `;
 
 //REMOVER O UNDERLINE DOS HORARIOS
+

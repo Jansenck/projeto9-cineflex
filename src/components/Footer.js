@@ -1,20 +1,21 @@
-import { useParams } from 'react-router-dom';
+
 import styled from 'styled-components';
 
 import { dataTicket } from './MovieSessions';
 
-export default function Footer(movies){
-
-    const {idMovie} = useParams();
+export default function Footer(props){
   
+
     return(
         <InfosTicket>
-            <ContainerImg>
-                <img src={dataTicket.image}/>
+            <ContainerImg >
+                <img src={props.image} alt=""/>
             </ContainerImg>
-            {dataTicket.title}
+            {props.title}
+            {props.date}
         </InfosTicket>
     );
+
 }
 
 const InfosTicket = styled.footer`
