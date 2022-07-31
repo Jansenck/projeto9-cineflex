@@ -1,0 +1,16 @@
+body{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    color: #293845;
+}
+header{
+    height: 10vh;
+    width: 100vw;
+    background-color: #C3CFD9;
+    color:#E8833A;
+    font-size: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
