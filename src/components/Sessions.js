@@ -36,14 +36,16 @@ export default function Sessions({ticket, setTicket}){
 
     function sendSeats(id, name, isAvailable){
 
+        //veridica se seatsSelectedjá tem o assento
         const verification = seatsSelected.includes(id);
+
         const alreadySelected = seatsSelected.filter(seat =>{return !(seat === id)})
         setSeatsSelected(alreadySelected);
 
         const idAlreadySelected = dataClient.seats.filter(seat =>{return !(seat === name)})
         setDataClient({...dataClient, seats: idAlreadySelected});
         
-        if(!verification){
+        if(!verification && isAvailable){
             setSeatsSelected([...seatsSelected, parseInt(id)]);
             setDataClient({...dataClient, seats: [...dataClient.seats, name]});  
         }
