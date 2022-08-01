@@ -7,7 +7,7 @@ import Footer from "./Footer";
 import axios from "axios";
 
 
-export default function Movies({ticket, setTicket}){
+export default function Movies({ticket, setTicket, setComeBackIcon, setWay}){
 
     const {movieId} = useParams();
     const [dataMovie, setDataMovie] = useState([]);

@@ -15,12 +15,14 @@ export default function App(){
 
     return(
         <BrowserRouter>
-            <header>CINEFLEX</header>
+            <header>            
+                <p>CINEFLEX</p>
+            </header>
             <Routes>
                 <Route path="/" element={<Home/>} ></Route>
-                <Route path="/movie/:movieId" element={<Movie ticket={ticket} setTicket={setTicket}/>} ></Route>
-                <Route path="/session/:sessionId" element={<Sessions ticket={ticket} setTicket={setTicket}/>} ></Route>
-                <Route path="/ticket" element={<Ticket ticket={ticket}/>} ></Route>
+                <Route path="/movie/:movieId" element={<Movie ticket={ticket} setTicket={setTicket} />} ></Route>
+                <Route path="/session/:sessionId" element={<Sessions ticket={ticket} setTicket={setTicket} />} ></Route>
+                <Route path="/ticket" element={<Ticket ticket={ticket} />} ></Route>
             </Routes>
         </BrowserRouter>
     );

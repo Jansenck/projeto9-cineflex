@@ -13,4 +13,11 @@ header{
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+header ion-icon{
+    position: absolute;
+    left: 5vw;
+    top: 25%;
 }

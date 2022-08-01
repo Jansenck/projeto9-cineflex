@@ -7,7 +7,7 @@ import styled from "styled-components";
 
 import Footer from "./Footer";
 
-export default function Sessions({ticket, setTicket}){
+export default function Sessions({ticket, setTicket, setComeBackIcon, setWay}){
 
     const navigate = useNavigate();
 
@@ -30,13 +30,13 @@ export default function Sessions({ticket, setTicket}){
             setDataMovies(data);
         });
 
-        promise.catch(err => console.log(err.status));
+        promise.catch(err => window.alert(err.status));
 
     },[sessionId]);
 
     function sendSeats(id, name, isAvailable){
 
-        //veridica se seatsSelectedjá tem o assento
+        //verify if the seat has been selected
         const verification = seatsSelected.includes(id);
 
         const alreadySelected = seatsSelected.filter(seat =>{return !(seat === id)})
@@ -67,21 +67,26 @@ export default function Sessions({ticket, setTicket}){
             cpf: cpf
         };
 
+        let cpfUpdated = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, 
+        function( regex, argument1, argument2, argument3, argument4 ) {
+                return argument1 + '.' + argument2 + '.' + argument3 + '-' + argument4;
+        });
+
         const request = axios.post("https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many", body);   
 
         request.then(()=> {
 
             const promise = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${sessionId}/seats`);
 
-            setTicket({...ticket, name: name, cpf: cpf, seats: seats});
+            setTicket({...ticket, name: name, cpf: cpfUpdated, seats: seats});
 
             navigate("/ticket");
 
-            promise.catch(err => console.log(err.status));
+            promise.catch(err => window.alert(err.status));
 
         });
         
-        request.catch(err => console.log(err.status));
+        request.catch(err => window.alert(err.status));
     }
 
     function RenderSeats(props){
@@ -148,17 +153,25 @@ export default function Sessions({ticket, setTicket}){
                         <input 
                             type={"text"}  
                             value={DataClient.name} 
-                            placeholder={"Digite seu nome..."} 
+                            placeholder={"Digite seu nome..."}
+                            pattern="[a-z]{3,30}" 
+                            title="Preencha esse campo apenas com caracteres (entre 3 e 30 caracteres)." 
                             onChange={(e) =>{setDataClient({...dataClient, name: e.target.value})}}></input>
 
                         <p>CPF do comprador:</p>
                         <input 
-                            type={"number"} 
+                            type={"text"} 
                             value={dataClient.cpf} 
                             placeholder={"Digite seu CPF..."} 
+                            pattern="[0-9]{11,11}"
+                            title="O campo 'CPF' deve ser preenchido com 11 dígitos de 0 a 9."
                             onChange={(e) =>{setDataClient({...dataClient, cpf: e.target.value})}}></input>
                         <Button>                   
-                            <button type="submit">Reservar assento(s)</button>
+                            <button 
+                                type="submit" 
+                                disabled={(seatsSelected.length === 0)? true : false}
+                                style={(seatsSelected.length === 0)? {background:"#D5D5D5"} : {background:"#E8833A"}}
+                            >Reservar assento(s)</button>
                         </Button>
                     </form>
                 </DataClient>
